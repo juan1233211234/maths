@@ -1,55 +1,546 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Calculadora de raíces</title>
-    <style>
-        body {
-            font-family: Arial;
-            padding: 20px;
-        }
-        input, button {
-            margin: 5px 0;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Calculadora educativa con Álgebra y Fracciones</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+      background-color: #5a6980;
+      color: #fff;
+    }
+    h1, h2 {
+      color: #ffe066;
+    }
+    .seccion {
+      background-color: #ffffff22;
+      border-left: 6px solid #00bcd4;
+      padding: 15px;
+      margin-bottom: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .seccion:nth-child(even) {
+      border-left-color: #ec407a;
+    }
+    .ejemplo {
+      font-style: italic;
+      color: #aed581;
+    }
+    ul {
+      margin-left: 1.2em;
+    }
+    input, button, select {
+      margin: 8px 0;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    #boton-calculadora, #boton-practica {
+      background-color: #e53935;
+      color: white;
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 20px;
+      margin-right: 10px;
+    }
+    #boton-calculadora:hover, #boton-practica:hover {
+      background-color: #c62828;
+    }
+    #calculadora, #practica {
+      display: none;
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #ffffff22;
+      border: 3px dashed #00bcd4;
+      border-radius: 12px;
+    }
+    #resultado, #resultado-practica {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #ffcccb;
+      font-size: 18px;
+    }
+    .algebra-explicacion {
+      background-color: #c8e6c9;
+      border: 2px solid #66bb6a;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 10px;
+      color: #2e7d32;
+    }
+    .fracciones-explicacion {
+      background-color: #d1c4e9;
+      border: 2px solid #7e57c2;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 10px;
+      color: #4527a0;
+    }
+    .paso {
+      margin: 5px 0;
+    }
+  </style>
 </head>
 <body>
 
-    <h2>Calculadora de raíces</h2>
-    <label>Radicando:</label><br>
-    <input type="number" id="radicando"><br>
+  <h1>Calculadora educativa</h1>
 
-    <label>Índice (2 = cuadrada, 3 = cúbica, 4 = cuarta):</label><br>
-    <input type="number" id="indice"><br>
+  <!-- Explicaciones -->
+  <div class="seccion">
+    <h2>Suma</h2>
+    <p>La <strong>suma</strong> se compone de:</p>
+    <ul>
+      <li><strong>Sumandos:</strong> los números que se suman.</li>
+      <li><strong>Símbolo +:</strong> indica la operación.</li>
+      <li><strong>Resultado:</strong> el total.</li>
+    </ul>
+    <p class="ejemplo">Ejemplo: 3 + 2 = 5</p>
+  </div>
 
-    <button onclick="calcularRaiz()">Calcular</button>
+  <div class="seccion">
+    <h2>Resta</h2>
+    <p>La <strong>resta</strong> se compone de:</p>
+    <ul>
+      <li><strong>Minuendo:</strong> número del que se resta.</li>
+      <li><strong>Sustraendo:</strong> lo que se quita.</li>
+      <li><strong>Diferencia:</strong> el resultado.</li>
+    </ul>
+    <p class="ejemplo">Ejemplo: 7 - 4 = 3</p>
+  </div>
 
+  <div class="seccion">
+    <h2>Multiplicación</h2>
+    <p>La <strong>multiplicación</strong> incluye:</p>
+    <ul>
+      <li><strong>Factores:</strong> los números que se multiplican.</li>
+      <li><strong>Símbolo ×:</strong> indica la operación.</li>
+      <li><strong>Producto:</strong> el resultado.</li>
+    </ul>
+    <p class="ejemplo">Ejemplo: 4 × 5 = 20</p>
+  </div>
+
+  <div class="seccion">
+    <h2>División</h2>
+    <p>La <strong>división</strong> se compone de:</p>
+    <ul>
+      <li><strong>Dividendo:</strong> el número que se divide.</li>
+      <li><strong>Divisor:</strong> el número por el que se divide.</li>
+      <li><strong>Cociente:</strong> el resultado.</li>
+    </ul>
+    <p class="ejemplo">Ejemplo: 12 ÷ 4 = 3</p>
+  </div>
+
+  <div class="seccion">
+    <h2>Potencia</h2>
+    <p>La <strong>potencia</strong> tiene:</p>
+    <ul>
+      <li><strong>Base:</strong> el número que se multiplica.</li>
+      <li><strong>Exponente:</strong> cuántas veces se multiplica la base.</li>
+      <li><strong>Potencia:</strong> el resultado.</li>
+    </ul>
+    <p class="ejemplo">Ejemplo: 2⁴ = 2 × 2 × 2 × 2 = 16</p>
+  </div>
+
+  <div class="seccion">
+    <h2>Raíz</h2>
+    <p>Una <strong>raíz</strong> se compone de:</p>
+    <ul>
+      <li><strong>Radicando:</strong> el número dentro de la raíz.</li>
+      <li><strong>Índice:</strong> el tipo de raíz (cuadrada, cúbica...)</li>
+      <li><strong>Resultado:</strong> el número que al multiplicarse por sí mismo da el radicando.</li>
+    </ul>
+    <p class="ejemplo">Ejemplo: √25 = 5</p>
+  </div>
+
+  <div class="seccion">
+    <h2>Álgebra (desde básico a avanzado)</h2>
+    <p>En álgebra trabajamos con <strong>variables</strong> (como x, y) y operaciones para encontrar valores desconocidos.</p>
+
+    <div class="algebra-explicacion">
+      <h3>Ejemplo básico: método de sustitución</h3>
+      <div class="paso">x + y = 10</div>
+      <div class="paso">x = 2y</div>
+      <div class="paso">→ Sustituimos x en la primera: 2y + y = 10</div>
+      <div class="paso">→ 3y = 10 → y = 10 / 3 ≈ 3.33</div>
+      <div class="paso">→ x = 2 * 3.33 ≈ 6.66</div>
+    </div>
+
+    <div class="algebra-explicacion" style="margin-top: 15px;">
+      <h3>Ejemplo intermedio: resolver ecuación lineal</h3>
+      <div class="paso">3x + 5 = 20</div>
+      <div class="paso">→ 3x = 20 - 5 = 15</div>
+      <div class="paso">→ x = 15 / 3 = 5</div>
+    </div>
+
+    <div class="algebra-explicacion" style="margin-top: 15px;">
+      <h3>Ejemplo avanzado: operaciones con fracciones algebraicas</h3>
+      <div class="paso">Simplifica: (x/2) + (3x/4)</div>
+      <div class="paso">→ Encuentra común denominador: 4</div>
+      <div class="paso">→ (2x/4) + (3x/4) = (5x/4)</div>
+    </div>
+  </div>
+
+  <div class="seccion">
+    <h2>Fracciones</h2>
+    <p>Una fracción representa una parte de un todo y está compuesta por:</p>
+    <ul>
+      <li><strong>Numerador:</strong> la cantidad de partes que tomamos.</li>
+      <li><strong>Denominador:</strong> el total de partes en que se divide el todo.</li>
+    </ul>
+    <p class="ejemplo">Ejemplo: 3/4 significa que tenemos 3 partes de un total de 4.</p>
+
+    <div class="fracciones-explicacion" style="margin-top: 15px;">
+      <h3>Suma de fracciones</h3>
+      <div class="paso">(1/3) + (1/6)</div>
+      <div class="paso">→ Encuentra común denominador: 6</div>
+      <div class="paso">→ (2/6) + (1/6) = 3/6 = 1/2</div>
+    </div>
+
+    <div class="fracciones-explicacion" style="margin-top: 15px;">
+      <h3>Multiplicación de fracciones</h3>
+      <div class="paso">(2/3) × (3/4) = (2×3)/(3×4) = 6/12 = 1/2</div>
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <button id="boton-calculadora">Calculadora</button>
+  <button id="boton-practica">Ejercicios</button>
+
+  <!-- Calculadora -->
+  <div id="calculadora" style="display:none;">
+    <h2>Calculadora interactiva</h2>
+    <label>Número 1 (decimal o fracción, ej. 3/4):</label><br>
+    <input type="text" id="num1"><br>
+    <label>Número 2 (decimal o fracción):</label><br>
+    <input type="text" id="num2"><br>
+    <label>Operación:</label><br>
+    <select id="operacion">
+      <option value="suma">Suma</option>
+      <option value="resta">Resta</option>
+      <option value="multiplicacion">Multiplicación</option>
+      <option value="division">División</option>
+      <option value="potencia">Potencia</option>
+      <option value="raiz">Raíz</option>
+      <option value="algebra">Álgebra (resolver ecuación simple)</option>
+      <option value="fracciones">Fracciones (suma y multiplicación)</option>
+    </select><br>
+    <label>Para álgebra, ingresa el resultado esperado:</label><br>
+    <input type="text" id="resultadoAlgebra"><br>
+    <button id="btnCalcular">Calcular</button>
     <p id="resultado"></p>
-     <script>
-        function calcularRaiz() {
-            let num1 = parseFloat(document.getElementById("radicando").value);
-            let num2 = parseInt(document.getElementById("indice").value);
-            let nombreRaiz;
+  </div>
 
-            if (num2 === 2) nombreRaiz = "raíz cuadrada";
-            else if (num2 === 3) nombreRaiz = "raíz cúbica";
-            else if (num2 === 4) nombreRaiz = "raíz cuarta";
-            else {
-                document.getElementById("resultado").innerText = "Índice no válido (solo 2, 3 o 4).";
-                return;
-            }
+  <!-- Práctica -->
+  <div id="practica" style="display:none;">
+    <h2>Práctica interactiva</h2>
+    <label>¿Qué tipo de operación querés practicar?</label><br>
+    <select id="tipoPractica">
+      <option value="suma">Suma</option>
+      <option value="resta">Resta</option>
+      <option value="multiplicacion">Multiplicación</option>
+      <option value="division">División</option>
+      <option value="algebra">Álgebra (resolver x + y = resultado)</option>
+      <option value="fracciones">Fracciones (suma y multiplicación)</option>
+    </select>
+    <button id="btnGenerar">Generar ejercicio</button><br><br>
+    <div id="preguntaEjercicio"></div>
+    <input type="text" id="respuestaUsuario" placeholder="Tu respuesta">
+    <button id="btnVerificar">Verificar</button>
+    <p id="resultado-practica"></p>
+    <div id="otraCuenta" style="display:none;">
+      <p>¿Querés hacer otra cuenta?</p>
+      <button id="btnOtraSi">Sí</button>
+      <button id="btnOtraNo">No</button>
+    </div>
+  </div>
 
-            while (true) {
-                let x = Math.random() * (num1 - 1) + 1;
-                let z = Math.pow(x, num2);
+<script>
+  window.onload = function() {
+    const botonCalculadora = document.getElementById('boton-calculadora');
+    const botonPractica = document.getElementById('boton-practica');
+    const calculadora = document.getElementById('calculadora');
+    const practica = document.getElementById('practica');
 
-                if (Math.abs(z - num1) < 0.000001) {
-                    document.getElementById("resultado").innerText = 
-                        `La ${nombreRaiz} de ${num1} es aproximadamente ${x.toFixed(6)}.`;
-                    break;
-                }
-            }
+    botonCalculadora.addEventListener('click', () => {
+      calculadora.style.display = 'block';
+      practica.style.display = 'none';
+      limpiarPractica();
+    });
+
+    botonPractica.addEventListener('click', () => {
+      practica.style.display = 'block';
+      calculadora.style.display = 'none';
+      limpiarCalculadora();
+    });
+
+    // Convierte string decimal o fraccion a número float
+    function convertirAFloat(valor) {
+      valor = valor.trim();
+      if (valor.includes('/')) {
+        const partes = valor.split('/');
+        if (partes.length === 2) {
+          const num = parseFloat(partes[0]);
+          const den = parseFloat(partes[1]);
+          if (isNaN(num) || isNaN(den) || den === 0) return NaN;
+          return num / den;
         }
-    </script>
+        return NaN;
+      }
+      return parseFloat(valor);
+    }
+
+    // Simplifica fracción (devuelve string simplificada)
+    function simplificarFraccion(num, den) {
+      function mcd(a, b) {
+        return b ? mcd(b, a % b) : a;
+      }
+      const divisor = mcd(num, den);
+      num /= divisor;
+      den /= divisor;
+      if (den === 1) return `${num}`;
+      return `${num}/${den}`;
+    }
+
+    // Calculadora
+    document.getElementById('btnCalcular').addEventListener('click', () => {
+      const rawNum1 = document.getElementById('num1').value;
+      const rawNum2 = document.getElementById('num2').value;
+      const op = document.getElementById('operacion').value;
+      const rawResAlg = document.getElementById('resultadoAlgebra').value.trim();
+
+      const num1 = convertirAFloat(rawNum1);
+      const num2 = convertirAFloat(rawNum2);
+      let resultadoAlgebra = convertirAFloat(rawResAlg);
+
+      let res = '';
+
+      if (op === 'algebra') {
+        if (isNaN(num1) || isNaN(resultadoAlgebra)) {
+          res = 'Para álgebra, ingresa el valor numérico de X y el resultado esperado.';
+        } else {
+          let y = resultadoAlgebra - num1;
+          res = `Si x = ${num1} y x + y = ${resultadoAlgebra}, entonces y = ${y.toFixed(4)}`;
+        }
+      } else if (op === 'fracciones') {
+        // Operaciones básicas: suma y multiplicación de fracciones
+        if (rawNum1.includes('/') && rawNum2.includes('/')) {
+          // Suma de fracciones
+          if (document.getElementById('operacion').selectedOptions[0].value === 'fracciones') {
+            // Aquí asumimos suma, para multiplicación usar otro método (podría ampliar)
+            // Por ahora para demostración hacemos suma y multiplicación con el mismo control:
+            // Si quieres que el usuario elija suma o multiplicación en fracciones, habría que poner un selector extra.
+          }
+        }
+        // Para ejemplo simple: suma y multiplicación solo, con elección basada en valores
+        // Aquí implemento suma y multiplicación simples:
+        // Suma: a/b + c/d = (ad + bc) / bd
+        // Multiplicación: (a/b) * (c/d) = (ac)/(bd)
+
+        // Vamos a obtener numeradores y denominadores:
+        function obtenerPartes(frac) {
+          const partes = frac.trim().split('/');
+          if (partes.length === 2) return [parseInt(partes[0]), parseInt(partes[1])];
+          return [parseInt(frac), 1];
+        }
+        let [a, b] = obtenerPartes(rawNum1);
+        let [c, d] = obtenerPartes(rawNum2);
+
+        if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d) || b === 0 || d === 0) {
+          res = 'Introduce fracciones válidas en formato a/b.';
+        } else {
+          // Vamos a usar la suma y multiplicación básicas:
+          // Distinción según input adicional para elegir suma o multiplicación:
+          // Como no hay selector extra, haré suma si el segundo número es distinto de 0, sino multiplicación.
+          // Mejor: asumo suma si num2 contiene '+', pero para no complicar, vamos a hacer suma solo:
+          // Vamos a mostrar ambas operaciones, para que el usuario pueda comparar.
+
+          // Suma:
+          const numeradorSuma = a * d + b * c;
+          const denominadorSuma = b * d;
+          const sumaSimplificada = simplificarFraccion(numeradorSuma, denominadorSuma);
+
+          // Multiplicación:
+          const numeradorMul = a * c;
+          const denominadorMul = b * d;
+          const mulSimplificada = simplificarFraccion(numeradorMul, denominadorMul);
+
+          res = `Suma: ${a}/${b} + ${c}/${d} = ${sumaSimplificada} <br> Multiplicación: ${a}/${b} × ${c}/${d} = ${mulSimplificada}`;
+        }
+
+      } else {
+        if (isNaN(num1) || (isNaN(num2) && op !== 'raiz')) {
+          res = 'Por favor ingresa números válidos.';
+        } else {
+          switch(op) {
+            case 'suma': res = `Resultado: ${(num1 + num2).toFixed(4)}`; break;
+            case 'resta': res = `Resultado: ${(num1 - num2).toFixed(4)}`; break;
+            case 'multiplicacion': res = `Resultado: ${(num1 * num2).toFixed(4)}`; break;
+            case 'division': 
+              res = (num2 === 0) ? 'No se puede dividir por cero.' : `Resultado: ${(num1 / num2).toFixed(4)}`; 
+              break;
+            case 'potencia': res = `Resultado: ${(Math.pow(num1, num2)).toFixed(4)}`; break;
+            case 'raiz':
+              const indice = num2 || 2;
+              if (indice < 2) {
+                res = 'El índice debe ser 2 o mayor.';
+              } else {
+                res = `Raíz de índice ${indice} de ${num1} ≈ ${(Math.pow(num1, 1 / indice)).toFixed(4)}`;
+              }
+              break;
+            default: res = 'Operación no soportada.';
+          }
+        }
+      }
+      document.getElementById('resultado').innerHTML = res;
+    });
+
+    let operacionActual = '';
+    let valorEsperado = 0;
+    let preguntaActual = '';
+
+    document.getElementById('btnGenerar').addEventListener('click', () => {
+      const tipo = document.getElementById('tipoPractica').value;
+      operacionActual = tipo;
+
+      // Generar ejercicio según tipo
+      if (tipo === 'algebra') {
+        let x = Math.floor(Math.random() * 10 + 1);
+        let y = Math.floor(Math.random() * 10 + 1);
+        let resultado = x + y;
+        valorEsperado = y;
+        preguntaActual = `Dado que x = ${x} y x + y = ${resultado}, ¿cuánto vale y?`;
+      } else if (tipo === 'fracciones') {
+        // Fracciones suma o multiplicación aleatorias simples
+        // Crear fracciones con numeradores y denominadores de 1 a 9
+        function generarFraccion() {
+          return {
+            num: Math.floor(Math.random() * 9 + 1),
+            den: Math.floor(Math.random() * 9 + 1)
+          };
+        }
+        const f1 = generarFraccion();
+        const f2 = generarFraccion();
+        const opFraccion = Math.random() < 0.5 ? 'suma' : 'multiplicacion';
+        if (opFraccion === 'suma') {
+          // Calcular suma
+          const numerador = f1.num * f2.den + f2.num * f1.den;
+          const denominador = f1.den * f2.den;
+          valorEsperado = simplificarFraccion(numerador, denominador);
+          preguntaActual = `¿Cuánto es ${f1.num}/${f1.den} + ${f2.num}/${f2.den}? Escribe la respuesta simplificada (ejemplo: 3/4 o 1).`;
+        } else {
+          // Multiplicación
+          const numerador = f1.num * f2.num;
+          const denominador = f1.den * f2.den;
+          valorEsperado = simplificarFraccion(numerador, denominador);
+          preguntaActual = `¿Cuánto es ${f1.num}/${f1.den} × ${f2.num}/${f2.den}? Escribe la respuesta simplificada (ejemplo: 3/4 o 1).`;
+        }
+      } else {
+        const a = Math.floor(Math.random() * 20 + 1);
+        const b = Math.floor(Math.random() * 20 + 1);
+        switch(tipo) {
+          case 'suma': valorEsperado = a + b; preguntaActual = `¿Cuánto es ${a} + ${b}?`; break;
+          case 'resta': valorEsperado = a - b; preguntaActual = `¿Cuánto es ${a} - ${b}?`; break;
+          case 'multiplicacion': valorEsperado = a * b; preguntaActual = `¿Cuánto es ${a} × ${b}?`; break;
+          case 'division': 
+            valorEsperado = parseFloat((a / b).toFixed(2)); 
+            preguntaActual = `¿Cuánto es ${a} ÷ ${b}? (Redondea a 2 decimales)`; 
+            break;
+        }
+      }
+
+      document.getElementById('preguntaEjercicio').innerHTML = preguntaActual;
+      document.getElementById('respuestaUsuario').value = '';
+      document.getElementById('resultado-practica').innerText = '';
+      document.getElementById('otraCuenta').style.display = 'none';
+    });
+
+    function simplificarFraccionStr(fracStr) {
+      // Convierte "a/b" o "a" a fracción simplificada "c/d" o "c"
+      fracStr = fracStr.trim();
+      if (fracStr.includes('/')) {
+        const partes = fracStr.split('/');
+        if (partes.length !== 2) return null;
+        let num = parseInt(partes[0]);
+        let den = parseInt(partes[1]);
+        if (isNaN(num) || isNaN(den) || den === 0) return null;
+
+        function mcd(a,b) {return b? mcd(b,a%b): a;}
+        const divisor = mcd(num, den);
+        num /= divisor; den /= divisor;
+        if (den === 1) return `${num}`;
+        return `${num}/${den}`;
+      } else {
+        let num = parseInt(fracStr);
+        if (isNaN(num)) return null;
+        return `${num}`;
+      }
+    }
+
+    document.getElementById('btnVerificar').addEventListener('click', () => {
+      let resp = document.getElementById('respuestaUsuario').value.trim();
+      if (operacionActual === 'fracciones') {
+        // Simplificar respuesta y comparar con valorEsperado (string)
+        let respSimplificada = simplificarFraccionStr(resp);
+        if (!respSimplificada) {
+          document.getElementById('resultado-practica').innerText = 'Por favor ingresa una fracción válida (ejemplo: 3/4 o 1).';
+          return;
+        }
+        if (respSimplificada === valorEsperado) {
+          document.getElementById('resultado-practica').innerText = '¡Felicitaciones, lograste hacerla con éxito!';
+        } else {
+          document.getElementById('resultado-practica').innerText = `Mala suerte. La respuesta correcta era ${valorEsperado}`;
+        }
+      } else {
+        const respNum = parseFloat(resp);
+        if (isNaN(respNum)) {
+          document.getElementById('resultado-practica').innerText = 'Por favor ingresa un número válido.';
+          return;
+        }
+        const esCorrecto = Math.abs(respNum - valorEsperado) < 0.01;
+        const mensaje = esCorrecto ?
+          '¡Felicitaciones, lograste hacerla con éxito!' :
+          `Mala suerte. La respuesta correcta era ${valorEsperado}`;
+        document.getElementById('resultado-practica').innerText = mensaje;
+      }
+      document.getElementById('otraCuenta').style.display = 'block';
+    });
+
+    document.getElementById('btnOtraSi').addEventListener('click', () => {
+      document.getElementById('resultado-practica').innerText = '';
+      document.getElementById('respuestaUsuario').value = '';
+      document.getElementById('otraCuenta').style.display = 'none';
+      document.getElementById('preguntaEjercicio').innerText = '';
+      document.getElementById('btnGenerar').click();
+    });
+
+    document.getElementById('btnOtraNo').addEventListener('click', () => {
+      document.getElementById('practica').style.display = 'none';
+      document.getElementById('respuestaUsuario').value = '';
+      document.getElementById('preguntaEjercicio').innerText = '';
+      document.getElementById('resultado-practica').innerText = '';
+      document.getElementById('otraCuenta').style.display = 'none';
+    });
+
+    function limpiarPractica() {
+      document.getElementById('preguntaEjercicio').innerText = '';
+      document.getElementById('respuestaUsuario').value = '';
+      document.getElementById('resultado-practica').innerText = '';
+      document.getElementById('otraCuenta').style.display = 'none';
+    }
+    function limpiarCalculadora() {
+      document.getElementById('num1').value = '';
+      document.getElementById('num2').value = '';
+      document.getElementById('resultadoAlgebra').value = '';
+      document.getElementById('resultado').innerHTML = '';
+    }
+  }
+</script>
 
 </body>
 </html>
